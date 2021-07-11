@@ -1,5 +1,3 @@
-from numpy import nan
-from typing import Dict
 import pandas as pd
 from sympy import Symbol, diff, factorial
 from sympy.core.add import Add
