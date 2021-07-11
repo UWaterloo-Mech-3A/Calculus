@@ -1,0 +1,8 @@
+numpy           # Has many numeric libraries not available in native Python, like trig functions
+pandas          # Good to display and organize large arrays
+matplotlib      # Plotting and Graphing library
+sympy           # Symbolic calculations, can only use in this project to display equations, nothing more
+jupyter         # Jupyter is a pythonic interface... you need to experience it
+notebook
+
+
