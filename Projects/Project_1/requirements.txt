@@ -4,6 +4,6 @@ matplotlib      # Plotting and Graphing library
 sympy           # Symbolic calculations, can only use in this project to display equations, nothing more
 jupyter         # Jupyter is a pythonic interface... you need to experience it
 notebook
-tqdm
+tqdm            # Progress bar
 
 

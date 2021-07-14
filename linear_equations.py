@@ -22,7 +22,7 @@ def jacobi(A, b, N=25, x=None):
 def seidel(a, x, b):
     # Finding length of a(3)
     n = len(a)
-    # for loop for 3 times as to calculate x, y , z
+    # for loop for 3 times as to calculate x, r , z
     for j in range(0, n):
         # temp variable d to store b[j]
         d = b[j]
