@@ -8,6 +8,8 @@ class RungeKutta4:
 		"""
 		Example usage:
 
+		Please note that instead of functions, you can use numpy or sympy lambdify commands.
+
 		>>> from numpy import exp
 		>>>
 		>>> def dy_dt(y, d2y_dt2, t)
@@ -18,7 +20,7 @@ class RungeKutta4:
 		>>>
 		>>>
 		>>> analyzer = RungeKutta4(dt=0.001, dr_dt=dy_dt, d2r_dt2=d2y_dt2)
-		>>> results = analyzer(r=100, dr_dt=0, t_=0, steps=1000)
+		>>> results = analyzer(r=100, dr_dt=0, t=0, steps=1000)
 
 		:param dt: constant change in time
 		:param weightings: weightings for Runga Kutta (4) method
@@ -41,9 +43,9 @@ class RungeKutta4:
 		}
 		for _ in tqdm(range(steps), desc="Generating values"):
 			# 1 updating the second derivative using last known information
-			outputs["d2r_dt2"].append(self.function_d2r_dt2(r=outputs["r"][-1], dr_dt=outputs["dr_dt"][-1], t=outputs["t_"][-1]))
+			outputs["d2r_dt2"].append(self.function_d2r_dt2(outputs["r"][-1], outputs["dr_dt"][-1], outputs["t"][-1]))
 			# 2 updating the first derivative using last known information
-			outputs["dr_dt"].append(self.function_dr_dt(r=outputs["r"][-1], d2r_dt2=outputs["d2r_dt2"][-1], t=outputs["t_"][-1]))
+			outputs["dr_dt"].append(self.function_dr_dt(outputs["r"][-1], outputs["d2r_dt2"][-1], outputs["t"][-1]))
 			# 3 updating the main equation using \frac{dr}{dt}
 			outputs["r"].append(outputs["r"][-1] + outputs["dr_dt"][-1] / self.dt)
 			# 4 updating the time  using last known information
