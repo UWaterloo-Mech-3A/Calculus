@@ -7,6 +7,7 @@ class RungeKutta4:
 	def __init__(self, dt: float = 0.001, weightings: np.array = None, dr_dt=None, d2r_dt2=None):
 		"""
 		Example usage:
+
 		>>> from numpy import exp
 		>>>
 		>>> def dy_dt(y, d2y_dt2, t)
@@ -36,25 +37,17 @@ class RungeKutta4:
 			"r": [r],
 			"dr_dt": [dr_dt],
 			"d2r_dt2": [np.nan],    # we don't have the initial conditions for the second derivative
-			"t_": [t]
+			"t": [t]
 		}
 		for _ in tqdm(range(steps), desc="Generating values"):
 			# 1 updating the second derivative using last known information
-			outputs["d2r_dt2"].append(self.function_d2r_dt2(
-				r=outputs["r"][-1],
-				dr_dt=outputs["dr_dt"][-1],
-				t=outputs["t_"][-1]
-			))
+			outputs["d2r_dt2"].append(self.function_d2r_dt2(r=outputs["r"][-1], dr_dt=outputs["dr_dt"][-1], t=outputs["t_"][-1]))
 			# 2 updating the first derivative using last known information
-			outputs["dr_dt"].append(self.function_dr_dt(
-				r=outputs["r"][-1],
-				d2r_dt2=outputs["d2r_dt2"][-1],
-				t=outputs["t_"][-1]
-			))
+			outputs["dr_dt"].append(self.function_dr_dt(r=outputs["r"][-1], d2r_dt2=outputs["d2r_dt2"][-1], t=outputs["t_"][-1]))
 			# 3 updating the main equation using \frac{dr}{dt}
 			outputs["r"].append(outputs["r"][-1] + outputs["dr_dt"][-1] / self.dt)
 			# 4 updating the time  using last known information
-			outputs["t_"].append(outputs["t_"][-1] + self.dt)
+			outputs["t"].append(outputs["t"][-1] + self.dt)
 		return outputs
 
 	def function_dr_dt(self, r: float, d2r_dt2: float, t: float) -> float:
@@ -96,8 +89,7 @@ class RungeKutta4:
 		return dr_dt + (1 / np.sum(self.w)) * np.sum(self.w * k)
 
 
-
-
+x = RungeKutta4()
 
 
 
