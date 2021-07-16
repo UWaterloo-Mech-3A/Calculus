@@ -43,9 +43,9 @@ class RungeKutta4:
 		}
 		for _ in tqdm(range(steps), desc="Generating values"):
 			# 1 updating the second derivative using last known information
-			outputs["d2r_dt2"].append(self.function_d2r_dt2(outputs["r"][-1], outputs["dr_dt"][-1], outputs["t"][-1]))
+			outputs["d2r_dt2"].append(self._kr4_d2r_dt2(outputs["r"][-1], outputs["dr_dt"][-1], outputs["t"][-1]))
 			# 2 updating the first derivative using last known information
-			outputs["dr_dt"].append(self.function_dr_dt(outputs["r"][-1], outputs["d2r_dt2"][-1], outputs["t"][-1]))
+			outputs["dr_dt"].append(self._kr4_dr_dt(outputs["r"][-1], outputs["d2r_dt2"][-1], outputs["t"][-1]))
 			# 3 updating the main equation using \frac{dr}{dt}
 			outputs["r"].append(outputs["r"][-1] + outputs["dr_dt"][-1] / self.dt)
 			# 4 updating the time  using last known information
@@ -72,7 +72,8 @@ class RungeKutta4:
 		k4 = self.function_dr_dt(r + k3 * self.dt, d2r_dt2, t + self.dt)
 
 		k = np.array([k1, k2, k3, k4])
-		return r + (1 / np.sum(self.w)) * np.sum(self.w * k)
+		#return r + (1 / np.sum(self.w)) * np.sum(self.w * k) 
+        return k1/6 + k2/3 + k3/3 + k4/6
 
 	def _kr4_d2r_dt2(self, r: float, dr_dt: float, t: float) -> float:
 		"""
@@ -88,7 +89,8 @@ class RungeKutta4:
 		k4 = self.function_d2r_dt2(r, dr_dt + k3 * self.dt, t + self.dt)
 
 		k = np.array([k1, k2, k3, k4])
-		return dr_dt + (1 / np.sum(self.w)) * np.sum(self.w * k)
+		#return dr_dt + (1 / np.sum(self.w)) * np.sum(self.w * k)
+        return k1/6 + k2/3 + k3/3 + k4/6
 
 
 x = RungeKutta4()
